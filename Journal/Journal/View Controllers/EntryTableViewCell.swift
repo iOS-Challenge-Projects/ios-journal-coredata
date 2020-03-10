@@ -9,6 +9,13 @@
 import UIKit
 
 class EntryTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
