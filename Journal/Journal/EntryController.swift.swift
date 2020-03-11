@@ -21,7 +21,9 @@ class EntryController {
     func save(title: String, bodyText: String ) {
         guard !title.isEmpty else {return}
         
-        let _ = Entry(title: title, bodyText: bodyText)
+        let timeStamp = Date()
+        
+        let _ = Entry(title: title, bodyText: bodyText, timestamp: timeStamp)
         
         saveToPersistentStore()
     }
