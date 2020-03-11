@@ -20,6 +20,7 @@ class EntryDetailViewController: UIViewController {
     var entry: Entry? {
         didSet{
             updateViews()
+           
         }
     }
     
@@ -32,14 +33,17 @@ class EntryDetailViewController: UIViewController {
     }
     
     func updateViews() {
-        if let title = entry?.title, let details = entry?.bodyText, !title.isEmpty, !details.isEmpty  {
-            titleTextField.text = title
-            detailTextView.text = details
-            print(title)
-        }
  
-  
+        if isViewLoaded{
+            if let title = entry?.title, let details = entry?.bodyText, !title.isEmpty, !details.isEmpty  {
+                titleTextField.text = title
+                detailTextView.text = details
+             
+            }
+        }
     }
+    
+    
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         guard let title = titleTextField.text, let details = detailTextView.text, !title.isEmpty, !details.isEmpty else { return }
