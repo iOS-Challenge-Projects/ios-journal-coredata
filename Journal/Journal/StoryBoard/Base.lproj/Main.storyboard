@@ -17,27 +17,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="wb8-Br-eAb" customClass="EntryTableViewCell" customModule="Journal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="64.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="customCell" rowHeight="72" id="wb8-Br-eAb" customClass="EntryTableViewCell" customModule="Journal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wb8-Br-eAb" id="WFK-Sm-Lig">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="64.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="204" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-Iz-5mr">
-                                            <rect key="frame" x="20" y="11" width="355" height="42.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5bK-qb-M0E">
+                                            <rect key="frame" x="20" y="11" width="355" height="50"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="mA9-JJ-Svp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="59" height="42"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oe9-QG-USe">
+                                                    <rect key="frame" x="0.0" y="0.0" width="52.5" height="50"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alQ-vd-7od">
-                                                            <rect key="frame" x="0.0" y="0.0" width="36.5" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="52.5" height="25"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3k-lJ-vph">
-                                                            <rect key="frame" x="0.0" y="21.5" width="52.5" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="33" width="52.5" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Stamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dg2-c2-TRd">
-                                                    <rect key="frame" x="263" y="0.0" width="92" height="20.5"/>
+                                                    <rect key="frame" x="263" y="0.0" width="92" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -54,10 +54,10 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="nIa-Iz-5mr" firstAttribute="leading" secondItem="WFK-Sm-Lig" secondAttribute="leadingMargin" id="4zI-1W-hF5"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="nIa-Iz-5mr" secondAttribute="bottom" id="JD7-N6-sY4"/>
-                                        <constraint firstItem="nIa-Iz-5mr" firstAttribute="top" secondItem="WFK-Sm-Lig" secondAttribute="topMargin" id="h5h-qR-JE9"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="nIa-Iz-5mr" secondAttribute="trailing" id="sgN-g7-Zo0"/>
+                                        <constraint firstItem="5bK-qb-M0E" firstAttribute="top" secondItem="WFK-Sm-Lig" secondAttribute="topMargin" id="CH5-by-XYm"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="5bK-qb-M0E" secondAttribute="bottom" id="Cfx-uM-Uyf"/>
+                                        <constraint firstItem="5bK-qb-M0E" firstAttribute="leading" secondItem="WFK-Sm-Lig" secondAttribute="leadingMargin" id="KRX-iQ-qdZ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="5bK-qb-M0E" secondAttribute="trailing" id="rpY-AT-xPO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -83,7 +83,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHV-5q-AXU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-625" y="159"/>
+            <point key="canvasLocation" x="-626.08695652173913" y="158.70535714285714"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="h5J-bE-Mcx">
@@ -113,14 +113,13 @@
                                 <rect key="frame" x="8" y="96" width="398" height="746"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrv-FK-XNa">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="252"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6fb-0O-ad9">
-                                        <rect key="frame" x="0.0" y="71" width="398" height="675"/>
+                                        <rect key="frame" x="0.0" y="289" width="398" height="457"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -142,8 +141,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="bCy-s1-NBn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="tWe-sz-x0U"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="tWe-sz-x0U">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="BYZ-38-t0r" id="XwJ-he-prt"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="detailTextView" destination="6fb-0O-ad9" id="fQk-sJ-r6j"/>
+                        <outlet property="titleTextField" destination="vrv-FK-XNa" id="PhP-nn-Rbi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
