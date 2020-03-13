@@ -49,4 +49,11 @@ class EntryController {
             return []
         }
     }
+    
+    func delete(_ task: NSManagedObject ) {
+       
+        CoreDataStack.shared.mainContext.delete(task)
+        
+        self.saveToPersistentStore()
+    }
 }

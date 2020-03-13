@@ -55,6 +55,8 @@ class EntryDetailViewController: UIViewController {
                 //Here we are editing the current selection
                 entry?.title = title
                 entry?.bodyText = details
+                //Also update date to the current date of the update
+                entry?.timestamp = Date()
                 entryController?.saveToPersistentStore()
                 navigationController?.popViewController(animated: true)
             }
