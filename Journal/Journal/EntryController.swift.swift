@@ -30,7 +30,7 @@ class EntryController {
     
     
     
-    private func saveToPersistentStore() {
+     func saveToPersistentStore() {
         do{
             try CoreDataStack.shared.mainContext.save()
         }catch{

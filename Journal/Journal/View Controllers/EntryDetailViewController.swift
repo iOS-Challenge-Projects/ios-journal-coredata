@@ -33,12 +33,11 @@ class EntryDetailViewController: UIViewController {
     }
     
     func updateViews() {
- 
+        //Check if view has loaded before assigning values to fields
         if isViewLoaded{
             if let title = entry?.title, let details = entry?.bodyText, !title.isEmpty, !details.isEmpty  {
                 titleTextField.text = title
                 detailTextView.text = details
-             
             }
         }
     }
@@ -49,12 +48,21 @@ class EntryDetailViewController: UIViewController {
         guard let title = titleTextField.text, let details = detailTextView.text, !title.isEmpty, !details.isEmpty else { return }
         
         if entry != nil  {
-            //Create update method
-            navigationController?.popViewController(animated: true)
-            print("Update EntryDetailViewController")
+            //Update current entry
+            //TODO: Create update method
+            if let title = titleTextField.text, let details = detailTextView.text, !title.isEmpty, !details.isEmpty  {
+                
+                //Here we are editing the current selection
+                entry?.title = title
+                entry?.bodyText = details
+                entryController?.saveToPersistentStore()
+                navigationController?.popViewController(animated: true)
+            }
+            
+
         }else{
+            //Here we are creating a new entry
             entryController?.save(title: title, bodyText: details)
-            print("Create EntryDetailViewController")
             navigationController?.popViewController(animated: true)
         }
     }
