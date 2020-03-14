@@ -13,22 +13,20 @@ class EntryController {
     
     
     //This will allow any changes to the persistent store become immediately visible to the user when accessing this array
+//    var entries: [Entry] {
+//        loadFromPersistentStore()
+//    }
     
-    var entries: [Entry] {
-        loadFromPersistentStore()
-    }
-    
-    
-    func loadFromPersistentStore() -> [Entry] {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        
-        do{
-            return try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-        }catch{
-            NSLog("Error while fetching data: \(error)")
-            return []
-        }
-    }
+    //    func loadFromPersistentStore() -> [Entry] {
+    //        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+    //
+    //        do{
+    //            return try CoreDataStack.shared.mainContext.fetch(fetchRequest)
+    //        }catch{
+    //            NSLog("Error while fetching data: \(error)")
+    //            return []
+    //        }
+    //    }
     
     
     func save(title: String, bodyText: String, seletedMoodIndex: Int) {
