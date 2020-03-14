@@ -13,17 +13,32 @@ class EntryController {
     
     
     //This will allow any changes to the persistent store become immediately visible to the user when accessing this array
+    
     var entries: [Entry] {
         loadFromPersistentStore()
     }
     
     
-    func save(title: String, bodyText: String ) {
+    func loadFromPersistentStore() -> [Entry] {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        
+        do{
+            return try CoreDataStack.shared.mainContext.fetch(fetchRequest)
+        }catch{
+            NSLog("Error while fetching data: \(error)")
+            return []
+        }
+    }
+    
+    
+    func save(title: String, bodyText: String, seletedMoodIndex: Int) {
         guard !title.isEmpty else {return}
         
         let timeStamp = Date()
         
-        let _ = Entry(title: title, bodyText: bodyText, timestamp: timeStamp)
+        let mood = EntryMood.allCases[seletedMoodIndex]
+        
+        let _ = Entry(title: title, bodyText: bodyText, timestamp: timeStamp, mood: mood)
         
         saveToPersistentStore()
     }
@@ -39,16 +54,6 @@ class EntryController {
     }
     
     
-    func loadFromPersistentStore() -> [Entry] {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        
-        do{
-            return try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-        }catch{
-            NSLog("Error while fetching data: \(error)")
-            return []
-        }
-    }
     
     func delete(_ task: NSManagedObject ) {
        

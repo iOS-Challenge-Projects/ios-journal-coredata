@@ -11,7 +11,6 @@ import UIKit
 class EntriesTableViewController: UITableViewController {
     
     //MARK: - Properties
-    
     let entryController = EntryController()
 
     
@@ -24,7 +23,15 @@ class EntriesTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-
+    
+    @IBAction func completedButtonPressed(_ sender: UIButton) {
+        print("Completed")
+        let  entryCell = EntryTableViewCell()
+        entryCell.changeButton()
+        
+    }
+    
+    
     // MARK: - Table view data source
     
 

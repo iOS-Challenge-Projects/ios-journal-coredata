@@ -24,20 +24,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5bK-qb-M0E">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5bK-qb-M0E">
                                             <rect key="frame" x="20" y="11" width="355" height="50"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oe9-QG-USe">
-                                                    <rect key="frame" x="0.0" y="0.0" width="52.5" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="143.5" height="50"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alQ-vd-7od">
-                                                            <rect key="frame" x="0.0" y="0.0" width="52.5" height="25"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="143.5" height="25"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3k-lJ-vph">
-                                                            <rect key="frame" x="0.0" y="33" width="52.5" height="17"/>
+                                                            <rect key="frame" x="0.0" y="33" width="143.5" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -45,8 +45,8 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Stamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dg2-c2-TRd">
-                                                    <rect key="frame" x="263" y="0.0" width="92" height="50"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="151.5" y="16.5" width="203.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -109,25 +109,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Il0-JN-d4C">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Il0-JN-d4C">
                                 <rect key="frame" x="8" y="96" width="398" height="746"/>
                                 <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="guT-iN-6hV">
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="32.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31.5" id="qqU-9j-8Mc"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="🙁"/>
+                                            <segment title=" 😐"/>
+                                            <segment title="😊"/>
+                                        </segments>
+                                    </segmentedControl>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrv-FK-XNa">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="252"/>
+                                        <rect key="frame" x="0.0" y="39.5" width="398" height="648.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6fb-0O-ad9">
-                                        <rect key="frame" x="0.0" y="289" width="398" height="457"/>
+                                        <rect key="frame" x="0.0" y="696" width="398" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="6fb-0O-ad9" firstAttribute="top" secondItem="vrv-FK-XNa" secondAttribute="bottom" constant="37" id="yoH-uM-TxO"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -149,6 +157,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="detailTextView" destination="6fb-0O-ad9" id="fQk-sJ-r6j"/>
+                        <outlet property="segmentedControl" destination="guT-iN-6hV" id="JJs-CG-lvt"/>
                         <outlet property="titleTextField" destination="vrv-FK-XNa" id="PhP-nn-Rbi"/>
                     </connections>
                 </viewController>
