@@ -11,23 +11,7 @@ import CoreData
 
 class EntryController {
     
-    
-    //This will allow any changes to the persistent store become immediately visible to the user when accessing this array
-//    var entries: [Entry] {
-//        loadFromPersistentStore()
-//    }
-    
-    //    func loadFromPersistentStore() -> [Entry] {
-    //        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-    //
-    //        do{
-    //            return try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-    //        }catch{
-    //            NSLog("Error while fetching data: \(error)")
-    //            return []
-    //        }
-    //    }
-    
+    let baseURL = URL(string: "https://jornal-2ac0f.firebaseio.com/")!
     
     func save(title: String, bodyText: String, seletedMoodIndex: Int) {
         guard !title.isEmpty else {return}

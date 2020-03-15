@@ -19,6 +19,7 @@
 		044AB4C3241742F70081A60F /* Entry+Convenience.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AB4C2241742F70081A60F /* Entry+Convenience.swift.swift */; };
 		044AB4C52417434D0081A60F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AB4C42417434D0081A60F /* CoreDataStack.swift */; };
 		044AB4C7241746420081A60F /* EntryController.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044AB4C6241746420081A60F /* EntryController.swift.swift */; };
+		04D65913241E18EC00DF9A08 /* EntryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D65912241E18EC00DF9A08 /* EntryRepresentation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		044AB4C42417434D0081A60F /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		044AB4C6241746420081A60F /* EntryController.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryController.swift.swift; sourceTree = "<group>"; };
 		04D6590B241BCE0200DF9A08 /* Journal 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Journal 2.xcdatamodel"; sourceTree = "<group>"; };
+		04D65912241E18EC00DF9A08 /* EntryRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepresentation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			children = (
 				044AB4A224173B220081A60F /* AppDelegate.swift */,
 				044AB4A424173B220081A60F /* SceneDelegate.swift */,
+				04D65914241E190200DF9A08 /* Data Model */,
 				044AB4BF2417427D0081A60F /* Journal.xcdatamodeld */,
 				044AB4C6241746420081A60F /* EntryController.swift.swift */,
 				044AB4C42417434D0081A60F /* CoreDataStack.swift */,
@@ -100,6 +103,14 @@
 				044AB4A824173B220081A60F /* Main.storyboard */,
 			);
 			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		04D65914241E190200DF9A08 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				04D65912241E18EC00DF9A08 /* EntryRepresentation.swift */,
+			);
+			path = "Data Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				044AB4B724173E440081A60F /* EntriesTableViewController.swift in Sources */,
+				04D65913241E18EC00DF9A08 /* EntryRepresentation.swift in Sources */,
 				044AB4B924173EB10081A60F /* EntryTableViewCell.swift in Sources */,
 				044AB4C3241742F70081A60F /* Entry+Convenience.swift.swift in Sources */,
 				044AB4A724173B220081A60F /* EntryDetailViewController.swift in Sources */,
