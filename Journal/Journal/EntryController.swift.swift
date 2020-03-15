@@ -11,7 +11,113 @@ import CoreData
 
 class EntryController {
     
+    //MARK: - FireBase
+    //Firebase project URL
     let baseURL = URL(string: "https://jornal-2ac0f.firebaseio.com/")!
+    
+    //typealias is a way of creating a var for a existing Type
+    //many times is easier to type the var/alias than the actual Type
+    typealias CompletionHandler = (Error?) -> Void
+    
+    //Closure has an empty default value to optionaly run whatever code we want when completed
+    func fetchEntriesFromServer(entry: Entry,completion: @escaping CompletionHandler = { _ in }) {
+        
+        let requestURL = baseURL.appendingPathExtension("json")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            
+            //Check if there is an error
+            if let error = error {
+                NSLog("Error fetching data from FB: \(error)")
+                completion(error)
+                return
+            }
+            
+            //Check if data exist
+            guard let data = data else {
+                NSLog("No Data found in FireBase")
+                completion(NSError())
+                return
+            }
+            
+            do{
+                let tasksRepresentation = Array(try JSONDecoder().decode([String: EntryRepresentation].self, from: data).values)
+                
+                self.updateEntries(with: tasksRepresentation)
+                
+                completion(nil)
+                
+            }catch{
+               NSLog("Error decoding data from FB: \(error)")
+            }
+            
+        }.resume()
+    }
+    
+    //representation argument represents the EntryRepresentation objects that are fetched from Firebase.
+    func updateEntries(with representations: [EntryRepresentation]) {
+        
+        //1.Fetch request from Entry
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        
+        
+        //Filter out the items which has no identifier for the "Values"
+        let taskID = representations.filter { $0.identifier != nil  }
+        
+        //Creates a new copy without nil identifiers for the "Keys"
+        let identitiesToFetch = taskID.compactMap { UUID(uuidString: $0.identifier!) }
+        
+        //2. Create a dictionary with the identifiers of the representations as the keys, and the values as the representations
+        //zip method to combine two arrays of items together into a dictionary
+        let representationByID = Dictionary(uniqueKeysWithValues: zip(identitiesToFetch, taskID))
+        
+        //Convert let to var
+        var taskToCreate = representationByID
+        
+        //3. Predicate to sort
+        fetchRequest.predicate = NSPredicate(format: "identifier IN %@", identitiesToFetch)
+        
+        do{
+            //1.This will return an array of Entry objects whose identifier was in the array you passed in to the predicate
+            let existingTask = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
+            
+            //2.Iterate over the CoreData items
+            for entry in existingTask{
+                
+                //get the specific representation using the identifier as the id
+                guard let id = entry.identifier, let representation = representationByID[id] else { continue }
+                
+                //1.Call update method while looping
+                self.update(entry: entry, with: representation)
+                
+                //2.remove matching task and whats left is the new items
+                taskToCreate.removeValue(forKey: id)
+                
+                //3.Create new entries into CoreData
+                for representation in taskToCreate.values{
+                    Entry(entryRepresentation: representation)
+                }
+            }
+            saveToPersistentStore()
+        }catch{
+            NSLog("Error fetching data: \(error)")
+        }
+        
+        
+    }
+    
+    //It takes in an Entry whose values should be updated, and an EntryRepresentation to take the values from
+    func update(entry: Entry, with entryRepresentaiton: EntryRepresentation) {
+        
+        entry.title = entryRepresentaiton.title
+        entry.bodyText = entryRepresentaiton.bodyText
+        entry.mood = entryRepresentaiton.mood
+        entry.timestamp = entryRepresentaiton.timestamp
+    }
+    
+    
+    
+    //MARK: - CoreData
     
     func save(title: String, bodyText: String, seletedMoodIndex: Int) {
         guard !title.isEmpty else {return}
@@ -25,9 +131,7 @@ class EntryController {
         saveToPersistentStore()
     }
     
-    
-    
-     func saveToPersistentStore() {
+    func saveToPersistentStore() {
         do{
             try CoreDataStack.shared.mainContext.save()
         }catch{
@@ -35,10 +139,8 @@ class EntryController {
         }
     }
     
-    
-    
     func delete(_ task: NSManagedObject ) {
-       
+        
         CoreDataStack.shared.mainContext.delete(task)
         
         self.saveToPersistentStore()
