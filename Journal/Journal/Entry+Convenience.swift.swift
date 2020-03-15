@@ -18,7 +18,7 @@ enum EntryMood: String, CaseIterable {
 
 extension Entry{
     
-    convenience init(title: String, bodyText: String? = nil, timestamp: Date, identifier: String = UUID().uuidString,mood: EntryMood = .normal, context:NSManagedObjectContext = CoreDataStack.shared.mainContext){
+    @discardableResult convenience init(title: String, bodyText: String? = nil, timestamp: Date, identifier: String = UUID().uuidString,mood: EntryMood = .normal, context:NSManagedObjectContext = CoreDataStack.shared.mainContext){
         
         self.init(context:context)
         self.title = title
