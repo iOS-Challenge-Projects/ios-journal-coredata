@@ -61,6 +61,49 @@ class EntryController {
         }.resume()
     }
     
+    func put(entry: Entry, completion: @escaping CompletionHandler = { _ in }) {
+        
+        let uuid = entry.identifier ?? UUID()
+        
+        let requestURL = baseURL.appendingPathComponent(uuid.uuidString).appendingPathComponent("json")
+        
+        var request = URLRequest(url: requestURL)
+        
+        request.httpMethod = "PUT"
+        
+        
+        do {
+            guard var representation = entry.entryRepresentation else {
+                completion(NSError())
+                return
+            }
+            
+            //Ensure both CD and FB has the same UUID
+            representation.identifier = uuid.uuidString
+            entry.identifier = uuid
+            
+            //save
+            self.saveToPersistentStore()
+            
+            //cunstructing the body of the request
+            request.httpBody =  try JSONEncoder().encode(representation)
+            
+        } catch {
+            NSLog("Error encoding data: \(error)")
+        }
+        
+        //Perform http request
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error{
+                
+                completion(error)
+            }
+            //if there is no error pass nil to signal no issues 
+            completion(nil)
+        }.resume()
+        
+    }
+    
     //representation argument represents the EntryRepresentation objects that are fetched from Firebase.
     func updateEntries(with representations: [EntryRepresentation]) {
         
@@ -124,7 +167,6 @@ class EntryController {
         entry.mood = entryRepresentaiton.mood
         entry.timestamp = entryRepresentaiton.timestamp
     }
-    
     
     
     //MARK: - CoreData
