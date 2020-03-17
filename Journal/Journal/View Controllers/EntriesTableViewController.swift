@@ -95,8 +95,6 @@ class EntriesTableViewController: UITableViewController {
             let task = fetchedResultsController.object(at: indexPath)
             
             entryController.delete(task)
-            
-            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
