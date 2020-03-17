@@ -11,6 +11,12 @@ import CoreData
 
 class EntryController {
     
+    
+    //Initialize EntryController with fetchEntriesFromServer method
+    init(){
+        fetchEntriesFromServer()
+    }
+    
     //MARK: - FireBase
     //Firebase project URL
     let baseURL = URL(string: "https://jornal-2ac0f.firebaseio.com/")!
@@ -20,7 +26,7 @@ class EntryController {
     typealias CompletionHandler = (Error?) -> Void
     
     //Closure has an empty default value to optionaly run whatever code we want when completed
-    func fetchEntriesFromServer(entry: Entry,completion: @escaping CompletionHandler = { _ in }) {
+    func fetchEntriesFromServer(completion: @escaping CompletionHandler = { _ in }) {
         
         let requestURL = baseURL.appendingPathExtension("json")
         
@@ -41,14 +47,15 @@ class EntryController {
             }
             
             do{
-                let tasksRepresentation = Array(try JSONDecoder().decode([String: EntryRepresentation].self, from: data).values)
+                //Array of values
+                let entriesRepresentation = Array(try JSONDecoder().decode([String: EntryRepresentation].self, from: data).values)
                 
-                self.updateEntries(with: tasksRepresentation)
+                self.updateEntries(with: entriesRepresentation)
                 
                 completion(nil)
                 
             }catch{
-               NSLog("Error decoding data from FB: \(error)")
+                NSLog("Error decoding data from FB: \(error)")
             }
             
         }.resume()
@@ -61,10 +68,10 @@ class EntryController {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
         
         
-        //Filter out the items which has no identifier for the "Values"
+        //Filter out the "Values" which has no identifier
         let taskID = representations.filter { $0.identifier != nil  }
         
-        //Creates a new copy without nil identifiers for the "Keys"
+        //Creates a new copy of "Keys" without nil identifiers for the
         let identitiesToFetch = taskID.compactMap { UUID(uuidString: $0.identifier!) }
         
         //2. Create a dictionary with the identifiers of the representations as the keys, and the values as the representations
@@ -87,17 +94,19 @@ class EntryController {
                 //get the specific representation using the identifier as the id
                 guard let id = entry.identifier, let representation = representationByID[id] else { continue }
                 
-                //1.Call update method while looping
+                //1.Call update method while looping to sync what match
                 self.update(entry: entry, with: representation)
                 
                 //2.remove matching task and whats left is the new items
                 taskToCreate.removeValue(forKey: id)
                 
-                //3.Create new entries into CoreData
-                for representation in taskToCreate.values{
-                    Entry(entryRepresentation: representation)
-                }
+                
             }
+            //3.Create new entries into CoreData of non matching itmes
+            for representation in taskToCreate.values{
+                Entry(entryRepresentation: representation)
+            }
+            //Save after loop finishes
             saveToPersistentStore()
         }catch{
             NSLog("Error fetching data: \(error)")
@@ -109,6 +118,7 @@ class EntryController {
     //It takes in an Entry whose values should be updated, and an EntryRepresentation to take the values from
     func update(entry: Entry, with entryRepresentaiton: EntryRepresentation) {
         
+        //No need to update the indetifier since it should never change
         entry.title = entryRepresentaiton.title
         entry.bodyText = entryRepresentaiton.bodyText
         entry.mood = entryRepresentaiton.mood

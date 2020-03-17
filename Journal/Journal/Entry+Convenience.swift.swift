@@ -25,6 +25,7 @@ extension Entry{
             return nil
         }
         
+        //take a Entry Core Data object and turn it into a EntryRepresentation
         return EntryRepresentation(title: title, bodyText: bodyText, identifier: identifier?.uuidString , mood: mood, timestamp: timestamp)
     }
     

@@ -39,6 +39,7 @@
 		044AB4C6241746420081A60F /* EntryController.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryController.swift.swift; sourceTree = "<group>"; };
 		04D6590B241BCE0200DF9A08 /* Journal 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Journal 2.xcdatamodel"; sourceTree = "<group>"; };
 		04D65912241E18EC00DF9A08 /* EntryRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepresentation.swift; sourceTree = "<group>"; };
+		04D65915241E6E8C00DF9A08 /* Journal 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Journal 3.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,10 +397,11 @@
 		044AB4BF2417427D0081A60F /* Journal.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				04D65915241E6E8C00DF9A08 /* Journal 3.xcdatamodel */,
 				04D6590B241BCE0200DF9A08 /* Journal 2.xcdatamodel */,
 				044AB4C02417427D0081A60F /* Journal.xcdatamodel */,
 			);
-			currentVersion = 04D6590B241BCE0200DF9A08 /* Journal 2.xcdatamodel */;
+			currentVersion = 04D65915241E6E8C00DF9A08 /* Journal 3.xcdatamodel */;
 			path = Journal.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
