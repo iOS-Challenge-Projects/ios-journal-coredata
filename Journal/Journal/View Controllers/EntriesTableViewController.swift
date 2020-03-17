@@ -85,16 +85,25 @@ class EntriesTableViewController: UITableViewController {
     }
  
  
- 
-    // Override to support editing the table view.
+    // Delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             
             //Get the target to be deleted
-            let task = fetchedResultsController.object(at: indexPath)
+            let entry = fetchedResultsController.object(at: indexPath)
             
-            entryController.delete(task)
+            
+            
+            self.entryController.deleteEntryFromServer(entry: entry) { error in
+                if let error = error {
+                    
+                    NSLog("Error deleting from Firebase: \(error)")
+                    
+                }
+                self.entryController.delete(entry)
+            }
+            
         }
     }
     

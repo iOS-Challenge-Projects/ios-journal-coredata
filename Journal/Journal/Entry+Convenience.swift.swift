@@ -51,7 +51,5 @@ extension Entry{
         self.mood = mood.rawValue
         self.identifier = identifier
     }
-    
 
-    
 }

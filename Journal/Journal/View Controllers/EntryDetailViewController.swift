@@ -26,7 +26,6 @@ class EntryDetailViewController: UIViewController {
     }
     
     var entryController: EntryController?
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,16 +58,20 @@ class EntryDetailViewController: UIViewController {
         
         if entry != nil  {
             //Update current entry
-
+            guard let entry = entry else { return }
             //Here we are editing the current selection
-            entry?.title = title
-            entry?.bodyText = details
+            entry.title = title
+            entry.bodyText = details
             let seletedMoodIndex = segmentedControl.selectedSegmentIndex
             let mood = EntryMood.allCases[seletedMoodIndex]
-            entry?.mood = mood.rawValue
+            entry.mood = mood.rawValue
             //Also update date to the current date of the update
-            entry?.timestamp = Date()
+            entry.timestamp = Date()
+            //Save changes to CoreData
             entryController?.saveToPersistentStore()
+            //Save changes to Firebase
+            entryController?.put(entry: entry)
+            //go back to original view
             navigationController?.popViewController(animated: true)
 
         }else{
@@ -76,7 +79,8 @@ class EntryDetailViewController: UIViewController {
             //Get the Int from the seleted segmented control
             let moodIndex = segmentedControl.selectedSegmentIndex
             
-            entryController?.save(title: title, bodyText: details,seletedMoodIndex: moodIndex)
+            //Save changes to CoreData and Firebase
+            entryController?.save(title: title, bodyText: details, seletedMoodIndex: moodIndex)
             
             navigationController?.popViewController(animated: true)
         }

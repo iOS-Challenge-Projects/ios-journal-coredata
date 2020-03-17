@@ -61,11 +61,12 @@ class EntryController {
         }.resume()
     }
     
+    //Create new entries and update current ones to Firebase
     func put(entry: Entry, completion: @escaping CompletionHandler = { _ in }) {
         
         let uuid = entry.identifier ?? UUID()
         
-        let requestURL = baseURL.appendingPathComponent(uuid.uuidString).appendingPathComponent("json")
+        let requestURL = baseURL.appendingPathComponent(uuid.uuidString).appendingPathComponent(".json")
         
         var request = URLRequest(url: requestURL)
         
@@ -82,8 +83,6 @@ class EntryController {
             representation.identifier = uuid.uuidString
             entry.identifier = uuid
             
-            //save
-            self.saveToPersistentStore()
             
             //cunstructing the body of the request
             request.httpBody =  try JSONEncoder().encode(representation)
@@ -98,13 +97,40 @@ class EntryController {
                 
                 completion(error)
             }
-            //if there is no error pass nil to signal no issues 
+            //print("Firebase response: \(response!)")
+            //if there is no error pass nil to signal no issues
             completion(nil)
+            
         }.resume()
         
     }
     
-    //representation argument represents the EntryRepresentation objects that are fetched from Firebase.
+    //Delete FireBase
+    func deleteEntryFromServer(entry: Entry, completion: @escaping CompletionHandler = {_ in }) {
+        
+        guard let uuid = entry.identifier else {
+            return
+        }
+        
+        //Constructing URL
+        let requestURL = baseURL.appendingPathComponent(uuid.uuidString).appendingPathComponent(".json")
+        
+        var request = URLRequest(url: requestURL)
+        
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(error)
+                return
+            }
+            //print(response!)
+            completion(nil)
+            
+        }.resume()
+    }
+    
+    //Sync CD with FB / Fetch data from FB
     func updateEntries(with representations: [EntryRepresentation]) {
         
         //1.Fetch request from Entry
@@ -127,34 +153,39 @@ class EntryController {
         //3. Predicate to sort
         fetchRequest.predicate = NSPredicate(format: "identifier IN %@", identitiesToFetch)
         
-        do{
-            //1.This will return an array of Entry objects whose identifier was in the array you passed in to the predicate
-            let existingTask = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-            
-            //2.Iterate over the CoreData items
-            for entry in existingTask{
-                
-                //get the specific representation using the identifier as the id
-                guard let id = entry.identifier, let representation = representationByID[id] else { continue }
-                
-                //1.Call update method while looping to sync what match
-                self.update(entry: entry, with: representation)
-                
-                //2.remove matching task and whats left is the new items
-                taskToCreate.removeValue(forKey: id)
-                
-                
-            }
-            //3.Create new entries into CoreData of non matching itmes
-            for representation in taskToCreate.values{
-                Entry(entryRepresentation: representation)
-            }
-            //Save after loop finishes
-            saveToPersistentStore()
-        }catch{
-            NSLog("Error fetching data: \(error)")
-        }
+        //Creating new BG context
+        let newBGContext = CoreDataStack.shared.container.newBackgroundContext()
         
+        //Wrap do block
+        newBGContext.performAndWait {
+            
+            do{
+                //1.This will return an array of Entry objects whose identifier was in the array you passed in to the predicate
+                let existingTask = try newBGContext.fetch(fetchRequest)
+                
+                //2.Iterate over the CoreData items
+                for entry in existingTask{
+                    
+                    //get the specific representation using the identifier as the id
+                    guard let id = entry.identifier, let representation = representationByID[id] else { continue }
+                    
+                    //1.Call update method while looping to sync what match
+                    self.update(entry: entry, with: representation)
+                    
+                    //2.remove matching task and whats left is the new items
+                    taskToCreate.removeValue(forKey: id)
+                }
+                //3.Create new entries into CoreData of non matching itmes
+                for representation in taskToCreate.values{
+                    Entry(entryRepresentation: representation,context: newBGContext)
+                }
+                
+                try CoreDataStack.shared.save(context: newBGContext)
+                
+            }catch{
+                NSLog("Error fetching data: \(error)")
+            }
+        }
         
     }
     
@@ -178,14 +209,18 @@ class EntryController {
         
         let mood = EntryMood.allCases[seletedMoodIndex]
         
-        let _ = Entry(title: title, bodyText: bodyText, timestamp: timeStamp, mood: mood)
+        //create instance and when calling saveToPersistentStore save it to CD
+        let entry = Entry(title: title, bodyText: bodyText, timestamp: timeStamp, mood: mood)
+        
+        //Save it in FireBase
+        put(entry: entry)
         
         saveToPersistentStore()
     }
     
     func saveToPersistentStore() {
         do{
-            try CoreDataStack.shared.mainContext.save()
+            try CoreDataStack.shared.save()
         }catch{
             NSLog("Error while saving data: \(error)")
         }
@@ -193,8 +228,17 @@ class EntryController {
     
     func delete(_ task: NSManagedObject ) {
         
-        CoreDataStack.shared.mainContext.delete(task)
+        //This will affect UI so mut be in main queu
+        DispatchQueue.main.async {
+            
+            CoreDataStack.shared.mainContext.delete(task)
+            do{
+                try CoreDataStack.shared.save()
+            }catch{
+                CoreDataStack.shared.mainContext.reset()
+                NSLog("Error while saving data: \(error)")
+            }
+        }
         
-        self.saveToPersistentStore()
     }
 }
